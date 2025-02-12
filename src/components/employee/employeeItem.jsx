@@ -25,7 +25,7 @@ const EmployeeItem = ({ person, onEdit, onDelete }) => {
     >
       <div className="d-flex align-items-center">
         <img
-          src={person.img}
+          src={person.photo}
           alt={person.name}
           width="40"
           height="40"

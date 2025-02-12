@@ -16,6 +16,21 @@ export default function GeneralInfo() {
   const fileInputRef = useRef(null);
   const [preview, setPreview] = useState(values.photo || null);
 
+  
+  useEffect(() => {
+    if (values.photo && values.photo instanceof File) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(values.photo);
+    } else if (typeof values.photo === "string") {
+      setPreview(values.photo);
+    }
+  }, [values.photo]);
+  
+
+
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
     if (file) {
@@ -35,71 +50,71 @@ export default function GeneralInfo() {
         <div className="col-md-6 border-end">
           <div className="d-flex align-items-center mb-2">
             <div className="mb-4 d-flex align-items-center">
-              {preview ? (
-                <div
-                  className="rounded-circle d-flex align-items-center justify-content-center"
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    border: "3px dotted #D0D5DD",
-                    overflow: "hidden",
-                    backgroundColor: "white",
-                  }}
-                  onClick={() => fileInputRef.current.click()} 
-                >
-                  <img
-                    src={preview}
-                    alt="Profil Önizleme"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-              ) : (
-                <button
-                  className="btn btn-light rounded-circle d-flex align-items-center justify-content-center"
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    fontSize: "24px",
-                    marginRight: "12px",
-                    border: "3px dotted #D0D5DD",
-                    color: "#667085",
-                    backgroundColor: "white",
-                  }}
-                  onClick={() => fileInputRef.current.click()}  
-                >
-                  +
-                </button>
-              )}
+      {preview ? (
+        <div
+          className="rounded-circle d-flex align-items-center justify-content-center"
+          style={{
+            width: "48px",
+            height: "48px",
+            border: "3px dotted #D0D5DD",
+            overflow: "hidden",
+            backgroundColor: "white",
+          }}
+          onClick={() => fileInputRef.current.click()}
+        >
+          <img
+            src={preview}
+            alt="Profil Önizleme"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      ) : (
+        <button
+          className="btn btn-light rounded-circle d-flex align-items-center justify-content-center"
+          style={{
+            width: "48px",
+            height: "48px",
+            fontSize: "24px",
+            marginRight: "12px",
+            border: "3px dotted #D0D5DD",
+            color: "#667085",
+            backgroundColor: "white",
+          }}
+          onClick={() => fileInputRef.current.click()}
+        >
+          +
+        </button>
+      )}
 
-              <div style={{ paddingLeft: 10 }}>
-                <label className="form-label fw-bold">Personel Fotoğrafı</label>
+      <div style={{ paddingLeft: 10 }}>
+        <label className="form-label fw-bold">Personel Fotoğrafı</label>
 
-                <input
-                  type="file"
-                  name="photo"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/png, image/jpeg"
-                  style={{ display: "none" }} 
-                />
+        <input
+          type="file"
+          name="photo"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept="image/png, image/jpeg"
+          style={{ display: "none" }}
+        />
 
-                <div
-                  className="text-primary"
-                  style={{ cursor: "pointer", fontSize: "14px" }}
-                  onClick={() => fileInputRef.current.click()} 
-                >
-                  Resim yükle
-                </div>
+        <div
+          className="text-primary"
+          style={{ cursor: "pointer", fontSize: "14px" }}
+          onClick={() => fileInputRef.current.click()}
+        >
+          Resim yükle
+        </div>
 
-                {errors.photo && touched.photo && (
-                  <div className="text-danger mt-1">{errors.photo}</div>
-                )}
-              </div>
-            </div>
+        {errors.photo && touched.photo && (
+          <div className="text-danger mt-1">{errors.photo}</div>
+        )}
+      </div>
+    </div>
           </div>
 
           <div className="mb-4">
